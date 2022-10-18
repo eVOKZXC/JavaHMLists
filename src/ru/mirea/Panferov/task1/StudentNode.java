@@ -4,7 +4,7 @@ public class StudentNode {
     private String fullname;
     private int age;
     private int course;
-    private StudentNode next = null;
+    public StudentNode next = null;
 
     public StudentNode(String fullname, int age, int course) {
         this.fullname = fullname;
@@ -12,12 +12,12 @@ public class StudentNode {
         this.course = course;
     }
 
-    public void nodeSetter(StudentNode node){
-        this.next = node;
-    }
+    public StudentNode(){}
+
+    public String getFullname() { return fullname; }
 
     @Override
     public String toString() {
-        return "Ученик: " + fullname + ", " + age + " лет, " + course + " курс";
+        return "Студент: " + fullname + ", " + age + " лет, " + course + " курс";
     }
 }

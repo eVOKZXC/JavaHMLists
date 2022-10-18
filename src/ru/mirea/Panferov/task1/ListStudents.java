@@ -3,46 +3,78 @@ package ru.mirea.Panferov.task1;
 import java.util.Scanner;
 
 public class ListStudents {
-    private StudentNode[] list;
-    int count;
-    static int counter = 0;
 
-    public ListStudents(int count) {
-        this.list = new StudentNode[count];
-        this.count = count;
+    private StudentNode head;
+
+    public void addNodeHead(String fullname, int age, int course){
+        StudentNode node = new StudentNode(fullname, age, course);
+        if (head == null){
+            head = node;
+            node = null;
+        }
+        else if (head.next != null){
+            node.next = head.next;
+        }
+        head.next = node;
     }
 
-    public ListStudents(){}
-
-    public void createEmpty(){
-        this.list = new StudentNode[0];
-        this.count = 0;
+    public void removeNodeHead(){
+        if (head.next != null ) head = head.next;
+        else System.out.println("В списке 1 или 0 узлов");
     }
 
-    public void addNode(StudentNode stdNode){
-        this.list[counter] = stdNode;
-        if (counter > 0) this.list[counter-1].nodeSetter(this.list[counter]);
-        counter++;
+    public void addNodeTail(String fullname, int age, int course){
+        StudentNode node = new StudentNode(fullname, age, course);
+        StudentNode tempNode = head;
+        while(tempNode.next != null) tempNode = tempNode.next;
+        tempNode.next = node;
     }
 
-    public void removeNode(){
-        counter--;
-        this.list[counter] = null;
-        this.list[counter-1].nodeSetter(null);
+    public void removeNodeTail(){
+        StudentNode tempNode = head;
+        StudentNode previousNode = tempNode;
+        while (tempNode.next != null){
+            previousNode = tempNode;
+            tempNode = tempNode.next;
+        }
+        previousNode.next = null;
     }
 
-    public StudentNode printNode(int index){
-        return this.list[index];
+    public void addNodeIndex(String fullname, int age, int course, int index){
+        StudentNode node = new StudentNode(fullname, age, course);
+        StudentNode tempNode = head;
+        for (int i = 0; i < index-1; i++){
+            tempNode = tempNode.next;
+        }
+        node.next = tempNode.next;
+        tempNode.next = node;
     }
 
-    public void clearList(){
-        for (int i = 0; i < count; i++)
-            this.list[i] = null;
+    public void removeNode(String fullname){
+        StudentNode tempNode = head;
+        StudentNode previousNode = tempNode;
+        boolean flag = true;
+        while(!tempNode.getFullname().equals(fullname)){
+            if (tempNode.next == null) {
+                flag = false;
+                break;
+            }
+            previousNode = tempNode;
+            tempNode = tempNode.next;
+        }
+        if (flag){
+            previousNode.next = tempNode.next;
+        }
     }
 
-    public boolean isEmpty(){
-        if (this.list[0] == null) return true;
-        else return false;
+    public void printList(){
+        StudentNode tempNode = head;
+        while(tempNode.next != null){
+            System.out.print(tempNode + " -> ");
+            tempNode = tempNode.next;
+        }
+        System.out.print(tempNode + "\n");
     }
+
 
 }
