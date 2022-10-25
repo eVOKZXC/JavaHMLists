@@ -12,8 +12,11 @@ public class BookNode {
         this.author = author;
         this.age = age;
     }
+
+    public String getTitle() { return title; }
+
     @Override
     public String toString() {
-        return "Книга: " + title + ", автор - " + author + ", дата издательства - " + age + " год";
+        return String.format("\"%s\", Автор: %s, Дата издателсьтва: %d год", title, author, age);
     }
 }

@@ -12,8 +12,6 @@ public class StudentNode {
         this.course = course;
     }
 
-    public StudentNode(){}
-
     public String getFullname() { return fullname; }
 
     @Override
