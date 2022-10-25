@@ -1,47 +1,73 @@
 package ru.mirea.Panferov.task2;
 
+import ru.mirea.Panferov.task1.StudentNode;
+
 public class DoubleList {
+    private BookNode head = null;
 
-    private BookNode[] list;
-    private int count;
-    int counter = 0;
-
-    public DoubleList(int count) {
-        this.list = new BookNode[count];
-        this.count = count;
-    }
-
-    public void createEmpty(){
-        this.list = new BookNode[0];
-        this.count = 0;
-    }
-
-    public void addNode(BookNode node){
-        this.list[counter] = node;
-        if (counter > 0){
-            this.list[counter-1].setNext(this.list[counter]);
-            this.list[counter].setPrevious(this.list[counter-1]);
+    public void addNodeHead(String title, String author, int age){
+        BookNode tempNode = new BookNode(title, author, age);
+        if (head == null){
+            head = tempNode;
+            tempNode = null;
         }
-        if (count - 1 != counter) counter++;
+        else if (head.next != null){
+            head.next.previous = tempNode;
+            tempNode.next = head.next;
+        }
+        head.next = tempNode;
+        if (tempNode != null) tempNode.previous = head;
     }
 
-    public void removeNode(){
-        this.list[counter] = null;
-        this.list[counter-1].setNext(null);
-        counter--;
+    public void removeNodeHead(){
+        if (head.next != null){
+            head = head.next;
+            head.previous = null;
+        }
+        System.out.println("В списке 1 или 0 узлов");
     }
 
-    public BookNode printNode(int n){
-        return this.list[n];
+    public void addNodeTail(String title, String author, int age){
+        BookNode tempNode = new BookNode(title, author, age);
+        BookNode cycleNode = head;
+        if (head == null){
+            head = tempNode;
+            cycleNode = head;
+            tempNode = null;
+        }
+        while (cycleNode.next != null) cycleNode = cycleNode.next;
+        cycleNode.next = tempNode;
+        if (tempNode != null) tempNode.previous = cycleNode;
     }
 
-    public void clearList(){
-        for (int i = 0; i < count; i++) this.list[i] = null;
+    public void removeNodeTail(){
+        BookNode cycleNode = head;
+        BookNode previousCycleNode = cycleNode;
+        while (cycleNode.next != null){
+            previousCycleNode = cycleNode;
+            cycleNode = cycleNode.next;
+        }
+        previousCycleNode.next = null;
     }
 
-    public boolean isEmpty(){
-        if (this.list[0] == null) return true;
-        else return false;
+    public void addNodeIndex(String title, String author, int age, int index){
+        BookNode tempNode = new BookNode(title, author, age);
+        BookNode cycleNode = head;
+        for (int i = 0; i < index-1; i++){
+            cycleNode = cycleNode.next;
+        }
+        tempNode.next = cycleNode.next;
+        tempNode.previous = cycleNode;
+        cycleNode.next = tempNode;
+    }
+
+    public void printList(){
+        BookNode tempNode = head;
+        while(tempNode.next != null){
+            System.out.print(tempNode + " <--> \n");
+            tempNode = tempNode.next;
+        }
+        System.out.print(tempNode + "\n");
     }
 
 }
