@@ -1,24 +1,22 @@
 package ru.mirea.Panferov.task2;
 
-import javax.sound.midi.Soundbank;
-
 public class DoubleListBooks {
     private BookNode head = null;
 
     public void addNodeHead(String title, String author, int age){
         BookNode newNode = new BookNode(title, author, age);
-        try {
+        if (head == null) head = newNode;
+        else if (head.next == null){
+            newNode.next = head;
             head = newNode;
-            newNode.next = head.next;
-        }catch (NullPointerException e){
-            head.next.previous = newNode;
+        }
+        else{
+
         }
     }
 
     public void addNodeHead(BookNode newNode){
-        newNode.next = head;
-        head = newNode;
-        head.next.previous = head;
+
     }
 
     public void removeNodeHead(){
