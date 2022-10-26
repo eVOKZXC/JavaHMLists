@@ -6,7 +6,7 @@ public class ListStudents {
 
     private StudentNode head;
 
-    public void addNodeHead(String fullname, int age, int course){
+    public void addHead(String fullname, int age, int course){
         StudentNode node = new StudentNode(fullname, age, course);
         if (head == null){
             head = node;
