@@ -42,9 +42,7 @@ public class DoubleListBooks {
         try{
             head = head.next;
             head.previous = null;
-        }catch (NullPointerException e){
-            System.out.println("Список пуст");
-        }
+        }catch (NullPointerException e){ System.out.println("Список пуст"); }
     }
 
     public void addTail(String title, String author, int age){
@@ -72,9 +70,21 @@ public class DoubleListBooks {
             }
             cycleNode.next = null;
         }
-        catch (NullPointerException e){
-            System.out.println("В списке нет элементов для удаления");
+        catch (NullPointerException e){ System.out.println("В списке нет элементов для удаления"); }
+    }
+    public BookNode findNode(String title){
+        BookNode tempNode = head;
+        try {
+            while(!tempNode.getTitle().equals(title)){
+                tempNode = tempNode.next;
+            }
+            return title.equals(tempNode.getTitle()) ? tempNode : null;
         }
+        catch (NullPointerException e){ return null; }
+    }
+
+    public boolean isEmpty(){
+        return head == null;
     }
 
     public void print(){

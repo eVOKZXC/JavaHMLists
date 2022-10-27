@@ -1,6 +1,6 @@
 package ru.mirea.Panferov.task1;
 
-import java.util.Scanner;
+import ru.mirea.Panferov.task2.BookNode;
 
 public class ListStudents {
 
@@ -10,25 +10,63 @@ public class ListStudents {
         StudentNode node = new StudentNode(fullname, age, course);
         if (head == null){
             head = node;
-            node = null;
+            head.next = head;
         }
-        else if (head.next != null){
-            node.next = head.next;
+        else if (head.next == head){
+            head.next = node;
+            node.next = head;
+            head = node;
         }
-        head.next = node;
+        else{
+            StudentNode tempNode = head;
+            head = node;
+            head.next = tempNode;
+            StudentNode cycleNode = head.next;
+            while(cycleNode.next != head.next) cycleNode = cycleNode.next;
+            cycleNode.next = head;
+
+        }
+    }
+
+    public void addHead(StudentNode node){
+        if (head == null){
+            head = node;
+            head.next = head;
+        }
+        else if (head.next == head){
+            head.next = node;
+            node.next = head;
+            head = node;
+        }
+        else{
+            StudentNode tempNode = head;
+            head = node;
+            head.next = tempNode;
+            StudentNode cycleNode = head.next;
+            while(cycleNode.next != head.next) cycleNode = cycleNode.next;
+            cycleNode.next = head;
+
+        }
     }
 
     public void removeNodeHead(){
         try{
-            if (head.next != null ) head = head.next;
+            head = head.next;
+            StudentNode cycleNode = head.next;
+            while(cycleNode.next != head.next) cycleNode = cycleNode.next;
+            cycleNode.next = head;
         }
-        catch (NullPointerException e){
-            System.out.println("В списке нет элементов для удаления");
-        }
+        catch (NullPointerException e){ System.out.println("В списке нет элементов для удаления"); }
     }
 
     public void addNodeTail(String fullname, int age, int course){
         StudentNode node = new StudentNode(fullname, age, course);
+        StudentNode tempNode = head;
+        while(tempNode.next != null) tempNode = tempNode.next;
+        tempNode.next = node;
+    }
+
+    public void addNodeTail(StudentNode node){
         StudentNode tempNode = head;
         while(tempNode.next != null) tempNode = tempNode.next;
         tempNode.next = node;
@@ -44,17 +82,20 @@ public class ListStudents {
             }
             previousNode.next = null;
         }
-        catch (NullPointerException e){
-            System.out.println("В списке нет элементов для удаления");
-        }
+        catch (NullPointerException e){ System.out.println("В списке нет элементов для удаления"); }
     }
 
     public void addNodeIndex(String fullname, int age, int course, int index){
         StudentNode node = new StudentNode(fullname, age, course);
         StudentNode tempNode = head;
-        for (int i = 0; i < index-1; i++){
-            tempNode = tempNode.next;
-        }
+        for (int i = 0; i < index-1; i++) tempNode = tempNode.next;
+        node.next = tempNode.next;
+        tempNode.next = node;
+    }
+
+    public void addNodeIndex(StudentNode node, int index){
+        StudentNode tempNode = head;
+        for (int i = 0; i < index-1; i++) tempNode = tempNode.next;
         node.next = tempNode.next;
         tempNode.next = node;
     }
@@ -72,19 +113,15 @@ public class ListStudents {
                 previousNode = tempNode;
                 tempNode = tempNode.next;
             }
-            if (flag){
-                previousNode.next = tempNode.next;
-            }
+            if (flag) previousNode.next = tempNode.next;
         }
-        catch (Exception e){
-            System.out.println("Невозможно удалить элемент");
-        }
+        catch (Exception e){ System.out.println("Невозможно удалить элемент"); }
     }
 
     public void printList(){
         StudentNode tempNode = head;
         try {
-            while(tempNode.next != null){
+            while(tempNode.next != head){
                 System.out.print(tempNode + " -> ");
                 tempNode = tempNode.next;
             }
@@ -94,10 +131,7 @@ public class ListStudents {
             System.out.println("В списке нет элементов, он пустой");
         }
     }
-
-    public boolean isEmpty(){
-        return head == null;
-    }
+    public boolean isEmpty(){ return head == null; }
 
 
 }

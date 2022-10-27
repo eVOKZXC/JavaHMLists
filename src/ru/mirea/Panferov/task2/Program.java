@@ -12,5 +12,7 @@ public class Program {
         books.addHead(bookNode);
         books.removeTail();
         books.print();
+        System.out.println(books.findNode("Полный ба"));
+        System.out.println(books.isEmpty());
     }
 }
