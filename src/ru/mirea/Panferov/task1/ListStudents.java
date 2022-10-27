@@ -8,71 +8,45 @@ public class ListStudents {
 
     public void addHead(String fullname, int age, int course){
         StudentNode node = new StudentNode(fullname, age, course);
-        if (head == null){
-            head = node;
-            head.next = head;
-        }
-        else if (head.next == head){
-            head.next = node;
-            node.next = head;
-            head = node;
-        }
+        if (head == null) head = node;
         else{
-            StudentNode tempNode = head;
-            head = node;
-            head.next = tempNode;
-            StudentNode cycleNode = head.next;
-            while(cycleNode.next != head.next) cycleNode = cycleNode.next;
-            cycleNode.next = head;
-
+           StudentNode tempNode = head;
+           head = node;
+           head.next = tempNode;
+        }
+    }
+    public void removeHead(){
+        try{
+            if (head.next != null ) head = head.next;
+        }
+        catch (NullPointerException e){
+            System.out.println("В списке нет элементов для удаления");
         }
     }
 
     public void addHead(StudentNode node){
-        if (head == null){
-            head = node;
-            head.next = head;
-        }
-        else if (head.next == head){
-            head.next = node;
-            node.next = head;
-            head = node;
-        }
+        if (head == null) head = node;
         else{
             StudentNode tempNode = head;
             head = node;
             head.next = tempNode;
-            StudentNode cycleNode = head.next;
-            while(cycleNode.next != head.next) cycleNode = cycleNode.next;
-            cycleNode.next = head;
-
         }
     }
 
-    public void removeNodeHead(){
-        try{
-            head = head.next;
-            StudentNode cycleNode = head.next;
-            while(cycleNode.next != head.next) cycleNode = cycleNode.next;
-            cycleNode.next = head;
-        }
-        catch (NullPointerException e){ System.out.println("В списке нет элементов для удаления"); }
-    }
-
-    public void addNodeTail(String fullname, int age, int course){
+    public void addTail(String fullname, int age, int course){
         StudentNode node = new StudentNode(fullname, age, course);
         StudentNode tempNode = head;
         while(tempNode.next != null) tempNode = tempNode.next;
         tempNode.next = node;
     }
 
-    public void addNodeTail(StudentNode node){
+    public void addTail(StudentNode node){
         StudentNode tempNode = head;
         while(tempNode.next != null) tempNode = tempNode.next;
         tempNode.next = node;
     }
 
-    public void removeNodeTail(){
+    public void removeTail(){
         StudentNode tempNode = head;
         StudentNode previousNode = tempNode;
         try {
@@ -85,7 +59,7 @@ public class ListStudents {
         catch (NullPointerException e){ System.out.println("В списке нет элементов для удаления"); }
     }
 
-    public void addNodeIndex(String fullname, int age, int course, int index){
+    public void addIndex(String fullname, int age, int course, int index){
         StudentNode node = new StudentNode(fullname, age, course);
         StudentNode tempNode = head;
         for (int i = 0; i < index-1; i++) tempNode = tempNode.next;
@@ -93,7 +67,7 @@ public class ListStudents {
         tempNode.next = node;
     }
 
-    public void addNodeIndex(StudentNode node, int index){
+    public void addIndex(StudentNode node, int index){
         StudentNode tempNode = head;
         for (int i = 0; i < index-1; i++) tempNode = tempNode.next;
         node.next = tempNode.next;
@@ -121,7 +95,7 @@ public class ListStudents {
     public void printList(){
         StudentNode tempNode = head;
         try {
-            while(tempNode.next != head){
+            while(tempNode.next != null){
                 System.out.print(tempNode + " -> ");
                 tempNode = tempNode.next;
             }
