@@ -10,6 +10,7 @@ public class DoubleListBooks {
         if (head == null) head = newNode;
         else if (head.next == null){
             newNode.next = head;
+            head.previous = newNode;
             head = newNode;
         }
         else{
@@ -26,6 +27,7 @@ public class DoubleListBooks {
         if (head == null) head = newNode;
         else if (head.next == null){
             newNode.next = head;
+            head.previous = newNode;
             head = newNode;
         }
         else{
