@@ -48,8 +48,7 @@ public class DoubleList {
         }catch (NullPointerException e){ System.out.println("Список пуст"); }
     }
 
-    public void sort(){
-        ArrayList<String> list = new ArrayList<>();
+    public void sortList(ArrayList<String> list, DoubleList newDoubleList){
         Node tempNode = head;
         while(tempNode.next != null){
             list.add(tempNode.getString());
@@ -57,7 +56,31 @@ public class DoubleList {
         }
         list.add(tempNode.getString());
         Collections.sort(list);
-        System.out.println(list);
+    }
+
+    public DoubleList sort(){
+        ArrayList<String> list = new ArrayList<>();
+        DoubleList newDoubleList = new DoubleList();
+        Node tempNode = head;
+
+        sortList(list, newDoubleList);
+
+        for (String i : list){
+            while(tempNode.next != null){
+                if (i.equals(tempNode.getString())){
+                    newDoubleList.addTail(tempNode.getString());
+                    tempNode = head;
+                    break;
+                }
+                tempNode = tempNode.next;
+                if (i.equals(tempNode.getString())){
+                    newDoubleList.addTail(tempNode.getString());
+                    tempNode = head;
+                    break;
+                }
+            }
+        }
+        return newDoubleList;
     }
 
     public void addTail(String string){
